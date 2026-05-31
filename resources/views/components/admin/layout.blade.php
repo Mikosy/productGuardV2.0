@@ -47,32 +47,53 @@
                         <div class="flex h-20 shrink-0 items-center border-b border-white/10">
                              <h1 class="text-white text-xl font-bold tracking-tight">ADMIN PORTAL</h1>
                         </div>
-                        <nav class="flex flex-1 flex-col pt-4">
-                            <ul role="list" class="flex flex-1 flex-col gap-y-7">
-                                <li>
-                                    <ul role="list" class="-mx-2 space-y-1">
-                                        
-                                        <li><x-admin.nav-link 
-                                            href="{{ route('admin.dashboard') }}" 
-                                            :active="request()->routeIs('admin.dashboard')" 
-                                            icon="fa-chart-pie">
-                                            Overview
-                                        </x-admin.nav-link></li>
-                                        <li><x-admin.nav-link 
-                                            href="#" 
-                                            :active="request()->routeIs('admin.users')" 
-                                            icon="fa-solid fa-user mr-3 opacity-50">
-                                            Users
-                                        </x-admin.nav-link></li>
-                                        <li><x-admin.nav-link 
-                                            href="#" 
-                                            :active="request()->routeIs('admin.inventory.index')" 
-                                            icon="fa-solid fa-boxes-stacked">
-                                            Digital Inventory
-                                        </x-admin.nav-link></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <nav class="mt-2 flex-1 px-4 space-y-2">
+                            <x-admin.nav-link 
+                                href="{{ route('admin.dashboard') }}" 
+                                :active="request()->routeIs('admin.dashboard')" 
+                                icon="fa-chart-pie">
+                                Overview
+                            </x-admin.nav-link>
+
+                            <x-admin.nav-link 
+                                href="{{ route('admin.users') }}" 
+                                :active="request()->routeIs('admin.users')" 
+                                icon="fa-solid fa-user mr-3 opacity-50">
+                                Users
+                            </x-admin.nav-link>
+
+                            <x-admin.nav-link 
+                                href="{{ route('admin.allocations.index') }}" 
+                                :active="request()->routeIs('admin.allocations.index')" 
+                                icon="fa-solid fa-boxes-stacked">
+                                Allocations
+                            </x-admin.nav-link>
+
+                            <x-admin.nav-link 
+                                href="{{ route('admin.dispatch.states') }}" 
+                                :active="request()->routeIs('admin.dispatch.states')" 
+                                icon="fa-solid fa-shipping-fast">
+                                Dispatch
+                            </x-admin.nav-link>
+
+                            <x-admin.nav-link 
+                                href="{{ route('admin.orders.index') }}" 
+                                :active="request()->routeIs('admin.orders.index')" 
+                                icon="fa-solid fa-shopping-cart">
+                                Orders
+                            </x-admin.nav-link>
+
+                            <x-admin.nav-link 
+                                href="{{ route('admin.incidents.index') }}" 
+                                :active="request()->routeIs('admin.incidents.index')" 
+                                icon="fa-solid fa-exclamation-triangle">
+                                Incidents
+                            </x-admin.nav-link>
+                            
+                            
+
+                            
+                            
                         </nav>
                     </div>
                 </div>
