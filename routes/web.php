@@ -130,6 +130,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/orders', [AdminDashboardController::class, 'globalOrdersIndex'])->name('orders.index');
     Route::get('/orders/{order}', [AdminDashboardController::class, 'globalOrderShow'])->name('orders.show');
 
+    // Admin Incident Management Desk
+    Route::get('/incidents', [AdminDashboardController::class, 'globalIncidentsIndex'])->name('incidents.index');
+    Route::post('/incidents/{item}/resolve', [AdminDashboardController::class, 'resolveIncident'])->name('incidents.resolve');
+
 });
 
 

@@ -42,6 +42,13 @@
                         icon="fa-solid fa-shopping-cart">
                         Orders
                     </x-admin.nav-link>
+
+                    <x-admin.nav-link 
+                        href="{{ route('admin.incidents.index') }}" 
+                        :active="request()->routeIs('admin.incidents.index')" 
+                        icon="fa-solid fa-exclamation-triangle">
+                        Incidents
+                    </x-admin.nav-link>
                     
                     
 

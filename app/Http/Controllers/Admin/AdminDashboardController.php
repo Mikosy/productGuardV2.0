@@ -14,6 +14,7 @@ use App\Models\Order;
 
 
 
+
 class AdminDashboardController extends Controller
 {
     public function index()
@@ -130,5 +131,57 @@ class AdminDashboardController extends Controller
         $order->load(['user', 'allocation.batch', 'items']);
 
         return view('admin.orders.show', compact('order'));
+    }
+
+    /**
+     * Display all items reported as damaged across the ecosystem.
+     */
+    public function globalIncidentsIndex()
+    {
+        // Fetch all item codes flagged as damaged along with their parent orders
+        $damagedItems = OrderItem::where('status', 'damaged')
+            ->with(['order.user', 'order.allocation.batch'])
+            ->latest()
+            ->paginate(15);
+
+        return view('admin.incidents.index', compact('damagedItems'));
+    }
+
+    /**
+     * Process administrative resolutions for damaged physical cargo stock items.
+     */
+    public function resolveIncident(Request $request, OrderItem $item)
+    {
+        $request->validate([
+            'action' => 'required|in:replace_and_reissue,refund_quota'
+        ]);
+
+        $order = $item->order;
+        $allocation = $order->allocation;
+
+        if ($request->input('action') === 'replace_and_reissue') {
+            // ACTION A: Re-mint a fresh, secure Tracking ID for the citizen to collect.
+            $newItemTrackingId = 'PG2-' . strtoupper(Str::random(4)) . '-' . rand(1000, 9999);
+            
+            OrderItem::create([
+                'order_id' => $order->id,
+                'item_tracking_id' => $newItemTrackingId,
+                'status' => 'paid', // Ready for pickup again at the local depot
+            ]);
+
+            // Permanently move the damaged row out of the primary live feed queue
+            $item->update(['status' => 'archived_damaged']);
+
+        } elseif ($request->input('action') === 'refund_quota') {
+            // ACTION B: Cancel this single unit item and return 1 unit back to the State pool.
+            $allocation->increment('remaining_quota', 1);
+            
+            // Mark the tracking item row status as voided
+            $item->update(['status' => 'voided_damaged']);
+            
+            // Optional: Run custom application logic here to initiate an accounting refund process.
+        }
+
+        return redirect()->back()->with('success', 'Incident resolved and inventory parameters synchronized.');
     }
 }
