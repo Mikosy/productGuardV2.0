@@ -84,7 +84,6 @@
                             <label class="block text-white/70 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Your Role</label>
                             <div class="relative">
                                 <select id="role" name="role" class="w-full bg-[#0F2C20] border-white/5 rounded-2xl p-4 text-white focus:ring-2 focus:ring-[#52B788] appearance-none cursor-pointer transition-all" required>
-                                    <option value="admin" class="bg-[#1B4332]">Admin</option>
                                     <option value="consumer" class="bg-[#1B4332]">Consumer</option>
                                     <option value="depot_officer" class="bg-[#1B4332]">Depot Officer</option>
                                 </select>
